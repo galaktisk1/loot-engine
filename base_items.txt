@@ -1,0 +1,7 @@
+Warrior|Longsword
+Warrior|Iron Armor
+Rogue|Dagger
+Rogue|Leather Armor
+Wizard|Staff
+Wizard|Robe
+Wizard|Wand
