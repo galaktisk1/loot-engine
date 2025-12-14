@@ -4,7 +4,7 @@ The main file with tkinter for the loot generation
 """
 
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk
 
 from loot_model import Character
 from loot_service import LootService
@@ -101,25 +101,21 @@ class LootApp(tk.Tk):
         name = self.entry_name.get().strip()
         if not name:
             self._set_status("Character name cannot be empty.", is_error=True)
-            messagebox.showwarning("Input Error", "Character name cannot be empty.")
             return
 
         char_class = self.combo_class.get().strip()
         if not char_class:
             self._set_status("Character class must be selected.", is_error=True)
-            messagebox.showwarning("Input Error", "Please select a character class.")
             return
 
         try:
             level = int(self.spin_level.get())
         except ValueError:
             self._set_status("Level must be a number between 1 and 20.", is_error=True)
-            messagebox.showwarning("Input Error", "Level must be a number between 1 and 20.")
             return
 
         if level < 1 or level > 20:
             self._set_status("Level must be between 1 and 20.", is_error=True)
-            messagebox.showwarning("Input Error", "Level must be between 1 and 20.")
             return
 
         character = Character(name=name, char_class=char_class, level=level)
@@ -134,23 +130,19 @@ class LootApp(tk.Tk):
         name: str = self.entry_name.get().strip()
         if not name:
             self._set_status("Character name cannot be empty.", is_error=True)
-            messagebox.showwarning("Input Error", "Character name cannot be empty.")
             return
         char_class: str = self.combo_class.get().strip()
         if not char_class:
             self._set_status("Character class must be selected.", is_error=True)
-            messagebox.showwarning("Input Error", "Please select a character class.")
             return
         try:
             level: int = int(self.spin_level.get())
         except ValueError:
             self._set_status("Level must be a number between 1 and 20.", is_error=True)
-            messagebox.showwarning("Input Error", "Level must be a number between 1 and 20.")
             return
 
         if level < 1 or level > 20:
             self._set_status("Level must be between 1 and 20.", is_error=True)
-            messagebox.showwarning("Input Error", "Level must be between 1 and 20.")
             return
 
         character = Character(name=name, char_class=char_class, level=level)
@@ -159,7 +151,6 @@ class LootApp(tk.Tk):
             item = self.loot_service.generate_loot_for_character(character)
         except Exception as e:
             self._set_status(f"Error generating loot: {e}", is_error=True)
-            messagebox.showerror("Loot Generation Error", f"An error occurred while generating loot: {e}")
             return
 
         save_loot_history(character, item)
