@@ -438,7 +438,12 @@ class LootService:
                 continue
             if random.random() < mod["chance"]:
                 chosen.append(mod)
+        # the math for determining the max mods is:
+        # take the player level, divide by 4 and round down
+        # Never going below 1, or above 5
+        # can go higher with any future updates i'd want to do to it
         max_mods = max(1, min(5, level // 4))
+        
         if len(chosen) > max_mods:
             chosen = random.sample(chosen, k=max_mods)
         return chosen
