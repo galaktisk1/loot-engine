@@ -21,6 +21,7 @@ class LootService:
         # it will be a long list of dictionaries
         self._modifiers = [
         # Power texts are modeled after D&D5e. Prefix/suffix controls name position.
+        # AI helped generate a few of these to increase the size of the modifiers list
         # Level 1
         {
             "name": "Flaming",
@@ -411,12 +412,13 @@ class LootService:
         base_item = self._choose_base_item(character.char_class)
         modifiers = self._roll_modifiers(character.level)
         full_name = self._build_item_name(base_item, modifiers)
-        power = self._calculate_power(character.level, modifiers)
+        power_text = self._build_power_text(modifiers)
         return Item(
             base_item=base_item,
             full_name=full_name,
             modifiers=[m["name"] for m in modifiers],
-            power=power,
+            power_text=power_text,
+            power_score=int(len(modifiers) + character.level)
         )
         
     def _choose_base_item(self, char_class: str) -> str:
@@ -459,10 +461,8 @@ class LootService:
         
         return " ".join(parts)
     
-    def _calculate_power(self, level: int, modifiers: list[dict[str, any]]) -> int:
-        """Calculate the power of an item based on character level and modifiers."""
-        base_power = level
-        for mod in modifiers:
-            # each modifier adds 1 to power
-            base_power += 1
-        return base_power
+    def _build_power_text(self, modifiers: list[dict[str, any]]) -> str:
+        """Construct a descriptive power text based on item modifiers."""
+        if not modifiers:
+            return "No special properties."
+        return "\n".join(mod["power_text"] for mod in modifiers)

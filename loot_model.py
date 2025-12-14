@@ -21,4 +21,5 @@ class Item:
     base_item: str
     full_name: str
     modifiers: list[str]
-    power: str
+    power_text: str
+    power_score: int

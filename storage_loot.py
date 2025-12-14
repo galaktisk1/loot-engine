@@ -4,11 +4,10 @@ Loading base items and saving loot history.
 """
 
 import csv
-from pathlib import Path
 from loot_model import Character, Item
 
-BASE_ITEMS_FILE = Path(__file__).parent / "base_items.txt"
-LOOT_HISTORY_FILE =  Path(__file__).parent / "loot_history.csv"
+BASE_ITEMS_FILE = "base_items.txt"
+LOOT_HISTORY_FILE = "loot_history.csv"
 
 def load_base_items() -> dict[str, list[str]]:
     """Load base items from a text file and return a dictionary by character class."""
@@ -32,13 +31,15 @@ def save_loot_history(character: Character, item: Item) -> None:
     try:
         with open(LOOT_HISTORY_FILE, "a", newline="", encoding="utf-8") as f:
             writer = csv.writer(f, delimiter="|")
-            writer.writerow([character.name,
+            writer.writerow([
+                character.name,
                 character.char_class,
                 character.level,
                 item.base_item,
                 item.full_name,
-                ", ".join(item.modifiers),
-                item.power,
+                ", ".join(item.modifiers) if item.modifiers else "None",
+                item.power_text if item.power_text else "No special properties.",
+                item.power_score
             ])
     except Exception as e:
         print(f"Error saving loot history: {e}")

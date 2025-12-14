@@ -171,8 +171,9 @@ class LootApp(tk.Tk):
             f"Level: {character.level}\n"
             f"Base Item: {item.base_item}\n"
             f"Full Name: {item.full_name}\n"
-            f"Modifiers: {modifier_list}\n\n"
-            f"Properties:\n{item.power}\n"
+            f"Modifiers: {modifier_list}\n"
+            f"Power Score: {item.power_score}\n"
+            f"Properties:\n{item.power_text}\n"
         )
         
         self._set_output(output)
